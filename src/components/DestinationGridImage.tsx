@@ -13,7 +13,7 @@ type Props = {
 
 function FlagFallback({ flag }: { flag: string }) {
   return (
-    <div className="relative aspect-[16/10] flex items-center justify-center bg-gradient-to-br from-primary via-[#024d3d] to-[#023a2f] text-white">
+    <div className="relative aspect-[16/10] flex items-center justify-center bg-gradient-to-br from-primary via-[#123a75] to-primary-hover text-white">
       <span className="text-6xl drop-shadow-md">{flag}</span>
     </div>
   );

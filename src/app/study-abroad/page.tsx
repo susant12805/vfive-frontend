@@ -94,7 +94,7 @@ export default function StudyAbroadPage() {
         {/* Scholarship Banner Section */}
         <section className="py-10 bg-slate-50">
           <div className="mx-auto max-w-7xl px-6 md:px-8">
-            <div className="bg-gradient-to-r from-primary to-[#023a2f] text-white rounded-3xl p-8 md:p-12 flex flex-col md:flex-row justify-between items-start md:items-center gap-8 shadow-md">
+            <div className="bg-gradient-to-r from-primary to-primary-hover text-white rounded-3xl p-8 md:p-12 flex flex-col md:flex-row justify-between items-start md:items-center gap-8 shadow-md">
               <div>
                 <span className="inline-block bg-white/10 px-3.5 py-1.5 rounded-full text-accent font-title text-xs font-bold uppercase tracking-wider mb-4">{studyAbroadCMS?.scholarshipBadge || "Merit-Based Scholarships"}</span>
                 <h2 className="font-title text-2xl md:text-3xl font-extrabold mb-3">{studyAbroadCMS?.scholarshipTitle || "Up to 100% Tuition Waiver"}</h2>

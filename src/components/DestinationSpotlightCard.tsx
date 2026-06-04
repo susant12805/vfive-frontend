@@ -16,7 +16,7 @@ type Props = {
 
 function FlagFallback({ flag }: { flag: string }) {
   return (
-    <div className="absolute inset-0 z-0 bg-gradient-to-br from-primary via-[#024d3d] to-[#023a2f] flex items-center justify-center">
+    <div className="absolute inset-0 z-0 bg-gradient-to-br from-primary via-[#123a75] to-primary-hover flex items-center justify-center">
       <span className="text-7xl drop-shadow-lg">{flag}</span>
     </div>
   );

@@ -132,7 +132,7 @@ export default function AboutPage() {
             </div>
 
             <div className="bg-white p-8 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow">
-              <div className="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center mb-6">
+              <div className="w-12 h-12 rounded-xl bg-primary-light text-primary flex items-center justify-center mb-6">
                 <ShieldCheck size={24} />
               </div>
               <h3 className="font-title text-xl font-bold text-slate-900 mb-4">Core Integrity</h3>

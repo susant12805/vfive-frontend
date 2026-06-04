@@ -1,13 +1,24 @@
 @import "tailwindcss";
 
-@theme {
-  --color-primary: #034E3F;
-  --color-primary-hover: #023a2f;
-  --color-primary-light: #EBF5F3;
-  --color-accent: #D39F3B;
-  --color-accent-hover: #c08d2d;
-  --color-accent-light: #FAF5EA;
-  
+/* Brand tokens (logo blue + red) — :root so dev hot-reload always picks up changes */
+:root {
+  --vfive-blue: #154295;
+  --vfive-blue-hover: #0f3268;
+  --vfive-blue-light: #e8eef8;
+  --vfive-red: #e31e24;
+  --vfive-red-hover: #c41a1f;
+  --vfive-red-light: #fdecec;
+}
+
+/* inline: utilities read live CSS vars (avoids stale Turbopack theme cache) */
+@theme inline {
+  --color-primary: var(--vfive-blue);
+  --color-primary-hover: var(--vfive-blue-hover);
+  --color-primary-light: var(--vfive-blue-light);
+  --color-accent: var(--vfive-red);
+  --color-accent-hover: var(--vfive-red-hover);
+  --color-accent-light: var(--vfive-red-light);
+
   --font-sans: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-title: var(--font-outfit), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }

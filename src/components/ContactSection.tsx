@@ -71,7 +71,7 @@ export default function ContactSection({ sectionId }: Props) {
           <h3 className="font-title text-xl font-bold text-slate-900 mb-2">Reach Out to Our Experts</h3>
 
           <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm flex items-start gap-4">
-            <div className="w-12 h-12 rounded-xl bg-green-50 text-green-600 flex items-center justify-center flex-shrink-0">
+            <div className="w-12 h-12 rounded-xl bg-primary-light text-primary flex items-center justify-center flex-shrink-0">
               <MessageSquare size={24} />
             </div>
             <div>

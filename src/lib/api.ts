@@ -1,16 +1,34 @@
 import { getAdminToken } from "@/lib/adminAuth";
 
-/**
- * When unset, requests use same-origin `/api/...` and Next.js rewrites proxy to the backend.
- * Set NEXT_PUBLIC_API_URL only if you want the browser to call the API host directly.
- */
-function resolveApiBase(): string {
-  const explicit = process.env.NEXT_PUBLIC_API_URL?.trim();
-  if (explicit) return explicit.replace(/\/$/, "");
-  return "";
+const PRODUCTION_API = "https://v-five-education.onrender.com";
+
+function isLocalHost(hostname: string): boolean {
+  return hostname === "localhost" || hostname === "127.0.0.1";
 }
 
-const API_BASE = resolveApiBase();
+/** Resolved at request time so production never uses a baked-in localhost URL. */
+export function getApiBase(): string {
+  const explicit = process.env.NEXT_PUBLIC_API_URL?.trim().replace(/\/$/, "");
+
+  if (typeof window !== "undefined") {
+    const host = window.location.hostname;
+    if (isLocalHost(host)) {
+      return explicit && !explicit.includes("localhost") ? explicit : "http://localhost:8000";
+    }
+    if (explicit && !explicit.includes("localhost") && !explicit.includes("127.0.0.1")) {
+      return explicit;
+    }
+    return PRODUCTION_API;
+  }
+
+  if (explicit && !explicit.includes("localhost") && !explicit.includes("127.0.0.1")) {
+    return explicit;
+  }
+  return process.env.VERCEL === "1" ? PRODUCTION_API : "http://localhost:8000";
+}
+
+/** @deprecated Use getApiBase() — kept for compatibility; may be wrong on Vercel if env has localhost. */
+export const API_BASE = getApiBase();
 
 export class ApiError extends Error {
   constructor(
@@ -29,7 +47,7 @@ function authHeaders(): HeadersInit {
 }
 
 export async function apiGet<T>(path: string): Promise<T> {
-  const res = await fetch(`${API_BASE}${path}`, {
+  const res = await fetch(`${getApiBase()}${path}`, {
     cache: "no-store",
     headers: authHeaders(),
   });
@@ -40,7 +58,7 @@ export async function apiGet<T>(path: string): Promise<T> {
 }
 
 export async function apiPut<T>(path: string, body: unknown): Promise<T> {
-  const res = await fetch(`${API_BASE}${path}`, {
+  const res = await fetch(`${getApiBase()}${path}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -60,7 +78,7 @@ export async function apiPut<T>(path: string, body: unknown): Promise<T> {
 }
 
 export async function apiPost<T>(path: string, body: unknown, auth = false): Promise<T> {
-  const res = await fetch(`${API_BASE}${path}`, {
+  const res = await fetch(`${getApiBase()}${path}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -80,7 +98,7 @@ export async function apiPost<T>(path: string, body: unknown, auth = false): Pro
 }
 
 export async function apiDelete(path: string): Promise<void> {
-  const res = await fetch(`${API_BASE}${path}`, {
+  const res = await fetch(`${getApiBase()}${path}`, {
     method: "DELETE",
     headers: authHeaders(),
   });
@@ -105,7 +123,7 @@ export async function apiUploadImage(
   form.append("file", file);
   form.append("folder", folder);
 
-  const res = await fetch(`${API_BASE}/api/uploads/image`, {
+  const res = await fetch(`${getApiBase()}/api/uploads/image`, {
     method: "POST",
     headers: authHeaders(),
     body: form,
@@ -126,5 +144,3 @@ export async function apiUploadImage(
 export async function apiGetUploadStatus(): Promise<UploadStatus> {
   return apiGet<UploadStatus>("/api/uploads/status");
 }
-
-export { API_BASE };

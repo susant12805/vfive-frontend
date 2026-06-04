@@ -1,12 +1,22 @@
 import type { NextConfig } from "next";
 
-/** Backend for /api/* rewrites (server-side). Override with BACKEND_URL on Vercel/Render. */
-const backendUrl =
-  process.env.BACKEND_URL?.replace(/\/$/, "") ||
-  process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, "") ||
-  (process.env.VERCEL === "1"
-    ? "https://v-five-education.onrender.com"
-    : "http://localhost:8000");
+const PRODUCTION_BACKEND = "https://v-five-education.onrender.com";
+
+function resolveBackendUrl(): string {
+  const candidates = [
+    process.env.BACKEND_URL,
+    process.env.NEXT_PUBLIC_API_URL,
+  ]
+    .map((v) => v?.trim().replace(/\/$/, ""))
+    .filter(Boolean) as string[];
+
+  const valid = candidates.find((u) => !u.includes("localhost") && !u.includes("127.0.0.1"));
+  if (valid) return valid;
+
+  return process.env.VERCEL === "1" ? PRODUCTION_BACKEND : "http://localhost:8000";
+}
+
+const backendUrl = resolveBackendUrl();
 
 const nextConfig: NextConfig = {
   async rewrites() {

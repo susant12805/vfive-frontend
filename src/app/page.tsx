@@ -23,17 +23,23 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState(false);
 
-  const loadContent = () => {
+  const loadContent = async (attempt = 0) => {
     setLoading(true);
     setLoadError(false);
-    return Promise.all([cms.getHomeData(), cms.getCoursesData()])
-      .then(([home, courses]) => {
-        setHomeCMS(home);
-        setCoursesCMS(courses);
-        setLoadError(false);
-      })
-      .catch(() => setLoadError(true))
-      .finally(() => setLoading(false));
+    try {
+      const [home, courses] = await Promise.all([cms.getHomeData(), cms.getCoursesData()]);
+      setHomeCMS(home);
+      setCoursesCMS(courses);
+      setLoadError(false);
+    } catch {
+      if (attempt < 2) {
+        await new Promise((r) => setTimeout(r, 4000));
+        return loadContent(attempt + 1);
+      }
+      setLoadError(true);
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {

@@ -39,7 +39,12 @@ export async function apiPut<T>(path: string, body: unknown): Promise<T> {
     body: JSON.stringify(body),
   });
   if (!res.ok) {
-    throw new ApiError(`Request failed: ${path}`, res.status);
+    const detail = await res.json().catch(() => ({}));
+    const message =
+      typeof detail === "object" && detail !== null && "detail" in detail
+        ? String((detail as { detail: unknown }).detail)
+        : `Request failed: ${path}`;
+    throw new ApiError(message, res.status);
   }
   return res.json() as Promise<T>;
 }

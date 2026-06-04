@@ -14,6 +14,7 @@ import {
   CheckCircle,
   Plus,
   Trash2,
+  Pencil,
   Lock,
   Menu,
   X,
@@ -35,7 +36,7 @@ import ImageUploadField from "@/components/ImageUploadField";
 import SiteLogo from "@/components/SiteLogo";
 import AdminHomeEditor from "@/components/admin/AdminHomeEditor";
 import AdminFooterEditor from "@/components/admin/AdminFooterEditor";
-import { apiDelete, apiGet, apiGetUploadStatus, apiPost } from "@/lib/api";
+import { apiDelete, apiGet, apiGetUploadStatus, apiPost, apiPut } from "@/lib/api";
 import {
   ADMIN_LOGIN_PATH,
   clearAdminSession,
@@ -57,6 +58,15 @@ type CurrentAdmin = {
   role: string;
   authenticated: boolean;
 };
+
+function getCmsText(data: object, key: string): string {
+  const value = (data as Record<string, unknown>)[key];
+  return typeof value === "string" ? value : "";
+}
+
+function patchCmsText<T extends object>(data: T, key: string, value: string): T {
+  return { ...data, [key]: value };
+}
 
 type SectionType = "home" | "courses" | "destinations" | "study-abroad" | "about" | "contact" | "footer" | "users";
 
@@ -102,6 +112,11 @@ export default function AdminDashboard() {
   const [newUserPassword, setNewUserPassword] = useState("");
   const [newUserName, setNewUserName] = useState("");
   const [userFormError, setUserFormError] = useState("");
+  const [editingUserId, setEditingUserId] = useState<number | null>(null);
+  const [editUserName, setEditUserName] = useState("");
+  const [editUserEmail, setEditUserEmail] = useState("");
+  const [editUserPassword, setEditUserPassword] = useState("");
+  const [editUserError, setEditUserError] = useState("");
   const [cloudinaryReady, setCloudinaryReady] = useState<boolean | null>(null);
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
@@ -200,13 +215,62 @@ export default function AdminDashboard() {
     }
   };
 
+  const handleDeleteInquiry = async (inquiryId: number) => {
+    if (!window.confirm("Delete this inquiry? This cannot be undone.")) return;
+    try {
+      await apiDelete(`/api/inquiries/${inquiryId}`);
+      setInquiries((prev) => prev.filter((inq) => inq.id !== inquiryId));
+      showToast("Inquiry deleted.");
+    } catch (err) {
+      showToast(err instanceof Error ? err.message : "Could not delete inquiry.");
+    }
+  };
+
   const handleDeleteUser = async (userId: number) => {
     try {
       await apiDelete(`/api/users/${userId}`);
+      if (editingUserId === userId) setEditingUserId(null);
       await refreshUsers();
       showToast("User removed.");
     } catch (err) {
       showToast(err instanceof Error ? err.message : "Could not delete user.");
+    }
+  };
+
+  const startEditUser = (user: AdminUserItem) => {
+    setEditingUserId(user.id);
+    setEditUserName(user.name || "");
+    setEditUserEmail(user.email);
+    setEditUserPassword("");
+    setEditUserError("");
+  };
+
+  const cancelEditUser = () => {
+    setEditingUserId(null);
+    setEditUserName("");
+    setEditUserEmail("");
+    setEditUserPassword("");
+    setEditUserError("");
+  };
+
+  const handleUpdateUser = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (editingUserId === null) return;
+    setEditUserError("");
+    try {
+      const body: { email: string; name: string; password?: string } = {
+        email: editUserEmail.trim().toLowerCase(),
+        name: editUserName.trim(),
+      };
+      if (editUserPassword.trim()) {
+        body.password = editUserPassword;
+      }
+      await apiPut(`/api/users/${editingUserId}`, body);
+      cancelEditUser();
+      await refreshUsers();
+      showToast("User updated successfully!");
+    } catch (err) {
+      setEditUserError(err instanceof Error ? err.message : "Could not update user.");
     }
   };
 
@@ -897,8 +961,8 @@ export default function AdminDashboard() {
                   <input
                     type="text"
                     className="bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-900"
-                    value={(studyAbroadData as Record<string, string>)[key] || ""}
-                    onChange={(e) => setStudyAbroadData({ ...studyAbroadData, [key]: e.target.value })}
+                    value={getCmsText(studyAbroadData, key)}
+                    onChange={(e) => setStudyAbroadData(patchCmsText(studyAbroadData, key, e.target.value))}
                   />
                 </div>
               ))}
@@ -953,8 +1017,8 @@ export default function AdminDashboard() {
                   <input
                     type="text"
                     className="bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-900"
-                    value={(studyAbroadData as Record<string, string>)[key] || ""}
-                    onChange={(e) => setStudyAbroadData({ ...studyAbroadData, [key]: e.target.value })}
+                    value={getCmsText(studyAbroadData, key)}
+                    onChange={(e) => setStudyAbroadData(patchCmsText(studyAbroadData, key, e.target.value))}
                   />
                 </div>
               ))}
@@ -1044,8 +1108,8 @@ export default function AdminDashboard() {
                   <input
                     type="text"
                     className="bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-900"
-                    value={(aboutData as Record<string, string>)[key] || ""}
-                    onChange={(e) => setAboutData({ ...aboutData, [key]: e.target.value })}
+                    value={getCmsText(aboutData, key)}
+                    onChange={(e) => setAboutData(patchCmsText(aboutData, key, e.target.value))}
                   />
                 </div>
               ))}
@@ -1058,8 +1122,8 @@ export default function AdminDashboard() {
                   <textarea
                     rows={3}
                     className="bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-900 resize-none"
-                    value={(aboutData as Record<string, string>)[key] || ""}
-                    onChange={(e) => setAboutData({ ...aboutData, [key]: e.target.value })}
+                    value={getCmsText(aboutData, key)}
+                    onChange={(e) => setAboutData(patchCmsText(aboutData, key, e.target.value))}
                   />
                 </div>
               ))}
@@ -1146,8 +1210,8 @@ export default function AdminDashboard() {
                   <input
                     type="text"
                     className="bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-900"
-                    value={(aboutData as Record<string, string>)[key] || ""}
-                    onChange={(e) => setAboutData({ ...aboutData, [key]: e.target.value })}
+                    value={getCmsText(aboutData, key)}
+                    onChange={(e) => setAboutData(patchCmsText(aboutData, key, e.target.value))}
                   />
                 </div>
               ))}
@@ -1194,8 +1258,8 @@ export default function AdminDashboard() {
                   <input
                     type="text"
                     className="bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-900"
-                    value={(aboutData as Record<string, string>)[key] || ""}
-                    onChange={(e) => setAboutData({ ...aboutData, [key]: e.target.value })}
+                    value={getCmsText(aboutData, key)}
+                    onChange={(e) => setAboutData(patchCmsText(aboutData, key, e.target.value))}
                   />
                 </div>
               ))}
@@ -1220,8 +1284,8 @@ export default function AdminDashboard() {
                   <input
                     type="text"
                     className="bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-900"
-                    value={(aboutData as Record<string, string>)[key] || ""}
-                    onChange={(e) => setAboutData({ ...aboutData, [key]: e.target.value })}
+                    value={getCmsText(aboutData, key)}
+                    onChange={(e) => setAboutData(patchCmsText(aboutData, key, e.target.value))}
                   />
                 </div>
               ))}
@@ -1367,11 +1431,21 @@ export default function AdminDashboard() {
                 <div className="flex flex-col gap-4">
                   {inquiries.map((inq) => (
                     <div key={inq.id} className="bg-gray-50 border border-gray-200 rounded-xl p-4 text-sm text-gray-800">
-                      <div className="flex flex-wrap justify-between gap-2 mb-2">
+                      <div className="flex flex-wrap justify-between items-start gap-2 mb-2">
                         <span className="font-bold">{inq.name}</span>
-                        <span className="text-xs text-gray-400">
-                          {new Date(inq.created_at).toLocaleString()}
-                        </span>
+                        <div className="flex items-center gap-2">
+                          <span className="text-xs text-gray-400">
+                            {new Date(inq.created_at).toLocaleString()}
+                          </span>
+                          <button
+                            type="button"
+                            onClick={() => handleDeleteInquiry(inq.id)}
+                            className="text-red-500 hover:text-red-600 p-1"
+                            title="Delete inquiry"
+                          >
+                            <Trash2 size={16} />
+                          </button>
+                        </div>
                       </div>
                       <p className="text-xs text-gray-600">{inq.phone} · {inq.email}</p>
                       <p className="text-xs text-primary font-semibold mt-1">Course: {inq.course}</p>
@@ -1440,36 +1514,96 @@ export default function AdminDashboard() {
                   adminUsers.map((user) => (
                     <div
                       key={user.id}
-                      className="flex flex-wrap items-center justify-between gap-3 bg-gray-50 border border-gray-200 rounded-xl px-4 py-3"
+                      className="bg-gray-50 border border-gray-200 rounded-xl px-4 py-3"
                     >
-                      <div>
-                        <p className="text-sm font-bold text-gray-900">
-                          {user.name || user.email}
-                          {user.role === "superadmin" && (
-                            <span className="ml-2 text-[10px] uppercase bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full">
-                              Administrator
-                            </span>
-                          )}
-                          {currentAdmin?.id === user.id && (
-                            <span className="ml-2 text-[10px] uppercase bg-primary/10 text-primary px-2 py-0.5 rounded-full">
-                              You
-                            </span>
-                          )}
-                        </p>
-                        <p className="text-xs text-gray-500">{user.email}</p>
-                        <p className="text-[10px] text-gray-400 mt-1">
-                          Added {new Date(user.created_at).toLocaleString()}
-                        </p>
-                      </div>
-                      {user.role !== "superadmin" && currentAdmin?.id !== user.id && (
-                        <button
-                          type="button"
-                          onClick={() => handleDeleteUser(user.id)}
-                          className="text-red-500 hover:text-red-600 p-2"
-                          title="Remove user"
-                        >
-                          <Trash2 size={16} />
-                        </button>
+                      {editingUserId === user.id ? (
+                        <form onSubmit={handleUpdateUser} className="flex flex-col gap-3">
+                          <p className="text-xs font-bold text-gray-600 uppercase">Edit user</p>
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <input
+                              type="text"
+                              placeholder="Display name"
+                              className="bg-white border border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-900"
+                              value={editUserName}
+                              onChange={(e) => setEditUserName(e.target.value)}
+                            />
+                            <input
+                              type="email"
+                              placeholder="Email address"
+                              required
+                              className="bg-white border border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-900"
+                              value={editUserEmail}
+                              onChange={(e) => setEditUserEmail(e.target.value)}
+                            />
+                          </div>
+                          <input
+                            type="password"
+                            placeholder="New password (leave blank to keep current)"
+                            minLength={6}
+                            className="bg-white border border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-900"
+                            value={editUserPassword}
+                            onChange={(e) => setEditUserPassword(e.target.value)}
+                          />
+                          {editUserError && <p className="text-xs text-red-600">{editUserError}</p>}
+                          <div className="flex flex-wrap gap-2">
+                            <button
+                              type="submit"
+                              className="flex items-center gap-1.5 bg-primary text-white text-xs font-bold px-4 py-2 rounded-lg"
+                            >
+                              <Save size={14} />
+                              Save changes
+                            </button>
+                            <button
+                              type="button"
+                              onClick={cancelEditUser}
+                              className="text-xs font-bold text-gray-600 px-4 py-2 rounded-lg border border-gray-200 hover:bg-white"
+                            >
+                              Cancel
+                            </button>
+                          </div>
+                        </form>
+                      ) : (
+                        <div className="flex flex-wrap items-center justify-between gap-3">
+                          <div>
+                            <p className="text-sm font-bold text-gray-900">
+                              {user.name || user.email}
+                              {user.role === "superadmin" && (
+                                <span className="ml-2 text-[10px] uppercase bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full">
+                                  Administrator
+                                </span>
+                              )}
+                              {currentAdmin?.id === user.id && (
+                                <span className="ml-2 text-[10px] uppercase bg-primary/10 text-primary px-2 py-0.5 rounded-full">
+                                  You
+                                </span>
+                              )}
+                            </p>
+                            <p className="text-xs text-gray-500">{user.email}</p>
+                            <p className="text-[10px] text-gray-400 mt-1">
+                              Added {new Date(user.created_at).toLocaleString()}
+                            </p>
+                          </div>
+                          <div className="flex items-center gap-1">
+                            <button
+                              type="button"
+                              onClick={() => startEditUser(user)}
+                              className="text-primary hover:text-primary-hover p-2"
+                              title="Edit user"
+                            >
+                              <Pencil size={16} />
+                            </button>
+                            {user.role !== "superadmin" && currentAdmin?.id !== user.id && (
+                              <button
+                                type="button"
+                                onClick={() => handleDeleteUser(user.id)}
+                                className="text-red-500 hover:text-red-600 p-2"
+                                title="Remove user"
+                              >
+                                <Trash2 size={16} />
+                              </button>
+                            )}
+                          </div>
+                        </div>
                       )}
                     </div>
                   ))

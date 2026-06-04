@@ -23,8 +23,10 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState(false);
 
-  useEffect(() => {
-    void Promise.all([cms.getHomeData(), cms.getCoursesData()])
+  const loadContent = () => {
+    setLoading(true);
+    setLoadError(false);
+    return Promise.all([cms.getHomeData(), cms.getCoursesData()])
       .then(([home, courses]) => {
         setHomeCMS(home);
         setCoursesCMS(courses);
@@ -32,6 +34,10 @@ export default function Home() {
       })
       .catch(() => setLoadError(true))
       .finally(() => setLoading(false));
+  };
+
+  useEffect(() => {
+    void loadContent();
   }, []);
 
   if (loading) {
@@ -50,10 +56,12 @@ export default function Home() {
       <div className="min-h-screen bg-white">
         <Navbar activePage="Home" />
         <main className="flex flex-col items-center justify-center gap-4 py-32 px-6 text-center">
-          <p className="text-slate-600 text-sm">Could not load page content. Make sure the backend is running.</p>
+          <p className="text-slate-600 text-sm">
+            Could not load page content. The API may be waking up (free tier) — wait a moment and try again.
+          </p>
           <button
             type="button"
-            onClick={() => window.location.reload()}
+            onClick={() => void loadContent()}
             className="font-title font-bold text-white bg-primary hover:bg-primary-hover px-5 py-2.5 rounded-xl text-sm"
           >
             Retry

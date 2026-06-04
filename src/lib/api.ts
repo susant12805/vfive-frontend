@@ -1,6 +1,16 @@
 import { getAdminToken } from "@/lib/adminAuth";
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
+/**
+ * When unset, requests use same-origin `/api/...` and Next.js rewrites proxy to the backend.
+ * Set NEXT_PUBLIC_API_URL only if you want the browser to call the API host directly.
+ */
+function resolveApiBase(): string {
+  const explicit = process.env.NEXT_PUBLIC_API_URL?.trim();
+  if (explicit) return explicit.replace(/\/$/, "");
+  return "";
+}
+
+const API_BASE = resolveApiBase();
 
 export class ApiError extends Error {
   constructor(

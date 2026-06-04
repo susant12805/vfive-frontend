@@ -200,7 +200,7 @@ export default function Home() {
                     }`}>
                       <ServiceIcon name={service.icon} size={24} />
                     </div>
-                    <h3 className={`font-title text-xl font-bold mb-4 ${service.featured ? "" : "text-slate-950"}`}>{service.title}</h3>
+                    <h3 className={`font-title text-xl font-bold mb-4 ${service.featured ? "text-white" : "text-slate-950"}`}>{service.title}</h3>
                     <p className={`text-sm leading-relaxed mb-6 ${service.featured ? "text-white/80" : "text-slate-500"}`}>
                       {service.description}
                     </p>

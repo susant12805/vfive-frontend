@@ -130,6 +130,8 @@ export interface DestinationsCMSData {
 }
 
 export interface StudyAbroadCMSData {
+  /** Allows dynamic CMS field keys in admin editors without unsafe casts */
+  [key: string]: string | number[] | undefined;
   heroTitle: string;
   heroSubtitle: string;
   heroImageUrl: string;

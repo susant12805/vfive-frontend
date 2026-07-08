@@ -136,7 +136,7 @@ export default function CoursesPage() {
         </section>
 
         {/* Search & Filter Bar Section */}
-        <section className="py-8 bg-white border-b border-slate-100 sticky top-20 z-30 shadow-[0_2px_15px_rgba(0,0,0,0.02)]">
+        <section className="py-8 bg-white border-b border-slate-100 shadow-[0_2px_15px_rgba(0,0,0,0.02)]">
           <div className="mx-auto max-w-7xl px-6 md:px-8">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6 items-end">
               {/* Search Field */}

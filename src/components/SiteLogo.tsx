@@ -10,8 +10,8 @@ type SiteLogoProps = {
 
 const LOGO_HEIGHT = {
   sm: "h-10",
-  md: "h-14",
-  lg: "h-20",
+  md: "h-16",
+  lg: "h-24",
   footer: "h-[4.25rem] max-w-[11rem]",
 } as const;
 

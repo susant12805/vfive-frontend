@@ -26,21 +26,25 @@ export default function AboutPage() {
     <div className="min-h-screen bg-slate-50">
       <Navbar activePage="About Us" />
 
-      {/* Hero Banner */}
-      <section className="relative bg-primary py-24 text-white overflow-hidden flex items-center justify-center text-center">
-        <div className="absolute inset-0 bg-primary/90 z-10" />
-        <div 
-          className="absolute inset-0 bg-cover bg-center opacity-40" 
-          style={{ backgroundImage: `url(${aboutCMS?.heroImageUrl || '/classroom_bg.png'})` }} 
-        />
-        <div className="max-w-4xl mx-auto px-6 relative z-20">
+      {/* Hero — full-bleed background; center the artwork so it isn't cropped mid-frame */}
+      <section className="relative bg-primary text-white overflow-hidden flex items-center justify-center text-center min-h-[420px] md:min-h-[520px] lg:min-h-[560px]">
+        <div className="absolute inset-0 z-0">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={aboutCMS?.heroImageUrl || "/classroom_bg.png"}
+            alt=""
+            className="h-full w-full object-cover object-center"
+          />
+        </div>
+        <div className="absolute inset-0 z-10 bg-gradient-to-b from-primary/70 via-primary/65 to-primary/80" />
+        <div className="max-w-4xl mx-auto px-6 py-20 md:py-28 relative z-20">
           <span className="inline-block bg-white/10 px-4 py-1.5 rounded-full text-accent font-title text-xs font-bold uppercase tracking-wider mb-4">
             {aboutCMS?.heroBadge}
           </span>
-          <h1 className="font-title text-4xl md:text-6xl font-black mb-6 leading-tight">
+          <h1 className="font-title text-4xl md:text-6xl font-black mb-6 leading-tight text-white">
             {aboutCMS?.heroTitle}
           </h1>
-          <p className="text-white/80 text-base md:text-xl max-w-2xl mx-auto leading-relaxed font-sans">
+          <p className="text-white/90 text-base md:text-xl max-w-2xl mx-auto leading-relaxed font-sans">
             {aboutCMS?.heroSubtitle}
           </p>
         </div>

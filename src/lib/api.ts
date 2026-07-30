@@ -1,6 +1,6 @@
 import { getAdminToken } from "@/lib/adminAuth";
 
-const PRODUCTION_API = "https://v-five-education.onrender.com";
+const PRODUCTION_API = "https://api.vfiveeducation.com.np";
 
 function isLocalHost(hostname: string): boolean {
   return hostname === "localhost" || hostname === "127.0.0.1";

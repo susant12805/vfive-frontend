@@ -1,6 +1,6 @@
 import type { NextConfig } from "next";
 
-const PRODUCTION_BACKEND = "https://api.vfiveeducation.com.np/";
+const PRODUCTION_BACKEND = "https://api.vfiveeducation.com.np";
 
 function resolveBackendUrl(): string {
   const candidates = [

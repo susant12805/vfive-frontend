@@ -51,7 +51,7 @@ function AdminLoginForm() {
         </div>
 
         {error && (
-          <div className="flex items-center gap-3 bg-red-500/10 border border-red-500/20 text-red-400 text-xs px-4 py-3 rounded-xl mb-6">
+          <div className="flex items-center gap-3 bg-red-950/20 border border-red-950/30 text-red-300 text-xs px-4 py-3 rounded-xl mb-6">
             <AlertCircle size={16} className="flex-shrink-0" />
             <span>{error}</span>
           </div>

@@ -403,7 +403,7 @@ export const DEFAULT_DESTINATIONS_DATA: DestinationsCMSData = {
 export const DEFAULT_STUDY_ABROAD_DATA: StudyAbroadCMSData = {
   heroTitle: "Global Opportunities Await You",
   heroSubtitle: "Explore high-quality education systems, scholarship opportunities, and post-study work options with V Five Education.",
-  heroImageUrl: "/study_abroad_hero.png",
+  heroImageUrl: "/studyabroad.jpg",
   sectionTitle: "Why Study Abroad?",
   sectionDesc: "Embarking on a study abroad journey is a transformative experience that broadens academic, cultural, and career perspectives. Let us guide you at every step.",
   scholarshipBadge: "Merit-Based Scholarships",
@@ -422,7 +422,7 @@ export const DEFAULT_ABOUT_DATA: AboutUsCMSData = {
   heroBadge: "Our Journey & Purpose",
   heroTitle: "Empowering Your Global Dreams Since 2010",
   heroSubtitle: "V Five Education Consultancy is dedicated to paving clear pathways for students seeking quality international education and professional career success.",
-  heroImageUrl: "/student_hero.png",
+  heroImageUrl: "/aboutus.jpg",
   storyBadge: "Who We Are",
   storyTitle: "Leading the Way in Educational Excellence",
   storyParagraph1: "Founded over a decade ago, V Five Education Consultancy has grown into a trusted beacon for students across Nepal. We bridge the gap between ambitious minds and world-class universities in countries like South Korea, Japan, United Kingdom, Canada, and Australia.",

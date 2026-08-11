@@ -472,7 +472,7 @@ export default function AdminDashboard() {
         <button
           type="button"
           onClick={handleLogout}
-          className="w-full flex items-center justify-center gap-2.5 bg-red-950/20 text-red-400 hover:bg-red-950/40 hover:text-red-300 py-3 rounded-xl text-sm font-semibold transition-all border border-red-950/40"
+          className="w-full flex items-center justify-center gap-2.5 bg-red-950/15 text-red-300 hover:bg-red-950/25 hover:text-red-200 py-3 rounded-xl text-sm font-semibold transition-all border border-red-950/30"
         >
           <LogOut size={16} />
           <span>Sign Out</span>
@@ -646,7 +646,7 @@ export default function AdminDashboard() {
                   <div key={course.id} className="bg-gray-50 p-6 rounded-xl border border-gray-200 relative">
                     <button
                       onClick={() => deleteCourseItem(course.id)}
-                      className="absolute top-6 right-6 text-red-500 hover:text-red-400 transition-colors"
+                      className="absolute top-6 right-6 text-red-400 hover:text-red-300 transition-colors"
                       title="Delete Course"
                     >
                       <Trash2 size={16} />
@@ -832,7 +832,7 @@ export default function AdminDashboard() {
                   <div key={dest.id} className="bg-gray-50 p-6 rounded-xl border border-gray-200 relative">
                     <button
                       onClick={() => deleteDestinationItem(dest.id)}
-                      className="absolute top-6 right-6 text-red-500 hover:text-red-400 transition-colors"
+                      className="absolute top-6 right-6 text-red-400 hover:text-red-300 transition-colors"
                       title="Delete Destination"
                     >
                       <Trash2 size={16} />
@@ -1321,7 +1321,7 @@ export default function AdminDashboard() {
                   <div key={member.id} className="bg-gray-50 p-6 rounded-xl border border-gray-200 relative">
                     <button
                       onClick={() => deleteTeamMember(member.id)}
-                      className="absolute top-6 right-6 text-red-500 hover:text-red-400"
+                      className="absolute top-6 right-6 text-red-400 hover:text-red-300"
                       title="Remove member"
                     >
                       <Trash2 size={16} />
@@ -1440,7 +1440,7 @@ export default function AdminDashboard() {
                           <button
                             type="button"
                             onClick={() => handleDeleteInquiry(inq.id)}
-                            className="text-red-500 hover:text-red-600 p-1"
+                            className="text-red-400 hover:text-red-300 p-1"
                             title="Delete inquiry"
                           >
                             <Trash2 size={16} />
@@ -1596,7 +1596,7 @@ export default function AdminDashboard() {
                               <button
                                 type="button"
                                 onClick={() => handleDeleteUser(user.id)}
-                                className="text-red-500 hover:text-red-600 p-2"
+                                className="text-red-400 hover:text-red-300 p-2"
                                 title="Remove user"
                               >
                                 <Trash2 size={16} />

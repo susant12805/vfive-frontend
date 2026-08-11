@@ -27,26 +27,28 @@ export default function AboutPage() {
       <Navbar activePage="About Us" />
 
       {/* Hero — full-bleed background; center the artwork so it isn't cropped mid-frame */}
-      <section className="relative bg-primary text-white overflow-hidden flex items-center justify-center text-center min-h-[420px] md:min-h-[520px] lg:min-h-[560px]">
+      <section className="relative bg-primary text-white overflow-hidden flex items-center justify-center text-center min-h-[650px] md:min-h-[660px] lg:min-h-[660px]">
         <div className="absolute inset-0 z-0">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src={aboutCMS?.heroImageUrl || "/classroom_bg.png"}
+            src={aboutCMS?.heroImageUrl || "/aboutus.jpg"}
             alt=""
             className="h-full w-full object-cover object-center"
           />
         </div>
         <div className="absolute inset-0 z-10 bg-gradient-to-b from-primary/70 via-primary/65 to-primary/80" />
-        <div className="max-w-4xl mx-auto px-6 py-20 md:py-28 relative z-20">
-          <span className="inline-block bg-white/10 px-4 py-1.5 rounded-full text-accent font-title text-xs font-bold uppercase tracking-wider mb-4">
-            {aboutCMS?.heroBadge}
-          </span>
-          <h1 className="font-title text-4xl md:text-6xl font-black mb-6 leading-tight text-white">
-            {aboutCMS?.heroTitle}
-          </h1>
-          <p className="text-white/90 text-base md:text-xl max-w-2xl mx-auto leading-relaxed font-sans">
-            {aboutCMS?.heroSubtitle}
-          </p>
+        <div className="max-w-3xl mx-auto px-6 py-8 md:py-10 relative z-20">
+          <div className="bg-hero-glass backdrop-blur-md border border-white/20 rounded-3xl px-6 py-8 sm:px-10 md:px-12 md:py-10 shadow-2xl">
+            {/* <span className="inline-block bg-white/10 px-4 py-1.5 rounded-full text-white/80 font-title text-xs font-bold uppercase tracking-wider mb-4">
+              {aboutCMS?.heroBadge}
+            </span> */}
+            <h1 className="font-title text-4xl md:text-6xl font-black mb-6 leading-tight text-white">
+              {aboutCMS?.heroTitle}
+            </h1>
+            <p className="text-white/90 text-base md:text-xl max-w-2xl mx-auto leading-relaxed font-sans">
+              {aboutCMS?.heroSubtitle}
+            </p>
+          </div>
         </div>
       </section>
 
@@ -184,24 +186,29 @@ export default function AboutPage() {
       {/* CTA section */}
       <section className="py-20 bg-slate-50 border-t border-slate-100">
         <div className="mx-auto max-w-7xl px-6 md:px-8">
-          <div className="bg-primary rounded-3xl p-8 md:p-12 lg:p-16 text-white grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative overflow-hidden shadow-xl">
-            <div className="absolute inset-0 bg-primary/95 z-10" />
-            <div 
-              className="absolute inset-0 bg-cover bg-center opacity-10" 
-              style={{ backgroundImage: `url('${aboutCMS?.ctaImageUrl || '/classroom_bg.png'}')` }} 
-            />
-            <div className="lg:col-span-8 flex flex-col items-start relative z-10 text-left">
-              <span className="bg-white/10 px-3.5 py-1 text-accent font-title text-xs font-bold rounded-full uppercase tracking-wider mb-4">
+          <div className="relative rounded-3xl p-8 md:p-12 lg:p-16 text-white grid grid-cols-1 lg:grid-cols-12 gap-8 items-center overflow-hidden shadow-xl">
+            <div className="absolute inset-0 z-0">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={aboutCMS?.ctaImageUrl || "/classroom_bg.png"}
+                alt=""
+                className="h-full w-full object-cover object-center"
+              />
+            </div>
+            <div className="absolute inset-0 z-10 bg-gradient-to-b from-primary/80 via-primary/75 to-primary/85" />
+            <div className="absolute inset-0 z-10 bg-hero-glass backdrop-blur-md" />
+            <div className="lg:col-span-8 flex flex-col items-start relative z-20 text-left">
+              <span className="bg-white/10 px-3.5 py-1 text-white/80 font-title text-xs font-bold rounded-full uppercase tracking-wider mb-4">
                 {aboutCMS?.ctaBadge}
               </span>
-              <h3 className="font-title text-2xl md:text-4xl font-extrabold mb-4 leading-tight">
+              <h3 className="font-title text-2xl md:text-4xl font-extrabold mb-4 leading-tight text-white">
                 {aboutCMS?.ctaTitle}
               </h3>
               <p className="text-white/80 text-sm md:text-base max-w-xl font-sans">
                 {aboutCMS?.ctaDesc}
               </p>
             </div>
-            <div className="lg:col-span-4 flex justify-start lg:justify-end w-full relative z-10">
+            <div className="lg:col-span-4 flex justify-start lg:justify-end w-full relative z-20">
               <a 
                 href="/contact" 
                 className="inline-flex items-center gap-3 bg-accent hover:bg-accent-hover text-slate-900 font-title font-bold text-sm px-8 py-4 rounded-xl shadow-md transition-all uppercase tracking-wider"

@@ -115,23 +115,34 @@ export default function CoursesPage() {
       <Navbar activePage="Courses" />
 
       <main>
-        {/* Banner Section */}
-        <section className="relative bg-primary py-24 text-white overflow-hidden flex items-center justify-center text-center">
-          <div className="max-w-3xl mx-auto px-6 relative z-10">
-            <span className="inline-block bg-white/10 px-4 py-1.5 rounded-full text-accent font-title text-xs font-bold uppercase tracking-wider mb-4">Global Opportunities</span>
-            {loading ? (
-              <div className="flex flex-col items-center gap-4 animate-pulse">
-                <div className="h-10 w-3/4 max-w-lg bg-white/20 rounded-lg" />
-                <div className="h-5 w-full max-w-md bg-white/10 rounded-lg" />
-              </div>
-            ) : (
-              <>
-                <h1 className="font-title text-3xl md:text-5xl font-black mb-6 leading-tight">{coursesCMS?.title}</h1>
-                <p className="text-white/80 text-base md:text-lg max-w-xl mx-auto leading-relaxed">
-                  {coursesCMS?.subtitle}
-                </p>
-              </>
-            )}
+        {/* Hero — full-bleed background; center the artwork so it isn't cropped mid-frame */}
+        <section className="relative bg-primary text-white overflow-hidden flex items-center justify-center text-center min-h-[650px] md:min-h-[660px] lg:min-h-[660px]">
+          <div className="absolute inset-0 z-0">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/classroom_bg.png"
+              alt=""
+              className="h-full w-full object-cover object-center"
+            />
+          </div>
+          <div className="absolute inset-0 z-10 bg-gradient-to-b from-primary/70 via-primary/65 to-primary/80" />
+          <div className="max-w-3xl mx-auto px-6 py-8 md:py-10 relative z-20">
+            <div className="bg-hero-glass backdrop-blur-md border border-white/20 rounded-3xl px-6 py-8 sm:px-10 md:px-12 md:py-10 shadow-2xl">
+              {/* <span className="inline-block bg-white/10 px-4 py-1.5 rounded-full text-white/80 font-title text-xs font-bold uppercase tracking-wider mb-4">Global Opportunities</span> */}
+              {loading ? (
+                <div className="flex flex-col items-center gap-4 animate-pulse">
+                  <div className="h-10 w-3/4 max-w-lg bg-white/20 rounded-lg mx-auto" />
+                  <div className="h-5 w-full max-w-md bg-white/10 rounded-lg mx-auto" />
+                </div>
+              ) : (
+                <>
+                  <h1 className="font-title text-4xl md:text-6xl font-black mb-6 leading-tight text-white">{coursesCMS?.title}</h1>
+                  <p className="text-white/90 text-base md:text-xl max-w-2xl mx-auto leading-relaxed font-sans">
+                    {coursesCMS?.subtitle}
+                  </p>
+                </>
+              )}
+            </div>
           </div>
         </section>
 
@@ -343,20 +354,30 @@ export default function CoursesPage() {
         {/* Global Journey CTA Section */}
         <section className="py-20 bg-white">
           <div className="mx-auto max-w-7xl px-6 md:px-8">
-            <div className="bg-primary text-white rounded-3xl p-8 md:p-12 lg:p-16 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative overflow-hidden shadow-xl">
-              <div className="lg:col-span-7 flex flex-col items-start gap-6">
-                <h2 className="font-title text-3xl md:text-4xl font-extrabold leading-tight">Start Your Global Journey with V Five</h2>
+            <div className="relative text-white rounded-3xl p-8 md:p-12 lg:p-16 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center overflow-hidden shadow-xl">
+              <div className="absolute inset-0 z-0">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/classroom_bg.png"
+                  alt=""
+                  className="h-full w-full object-cover object-center"
+                />
+              </div>
+              <div className="absolute inset-0 z-10 bg-gradient-to-b from-primary/80 via-primary/75 to-primary/85" />
+              <div className="absolute inset-0 z-10 bg-hero-glass backdrop-blur-md" />
+              <div className="lg:col-span-7 flex flex-col items-start gap-6 relative z-20">
+                <h2 className="font-title text-3xl md:text-4xl font-extrabold leading-tight text-white">Start Your Global Journey with V Five</h2>
                 <p className="text-white/80 text-sm md:text-base leading-relaxed">
                   Join thousands of successful students who have reached their academic and career goals with our professional guidance.
                 </p>
                 <a
                   href="/contact"
-                  className="font-title font-bold text-slate-900 bg-accent hover:bg-accent-hover px-6 py-3.5 rounded-xl shadow-sm transition-all duration-200 inline-block"
+                  className="font-title font-bold text-white bg-red-700 hover:bg-red-800 px-6 py-3.5 rounded-xl shadow-sm transition-all duration-200 inline-block"
                 >
                   Enrol Now
                 </a>
               </div>
-              <div className="lg:col-span-5 w-full max-w-sm mx-auto">
+              <div className="lg:col-span-5 w-full max-w-sm mx-auto relative z-20">
                 <div className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-lg border-2 border-white/10">
                   <Image
                     src="/classroom_bg.png"

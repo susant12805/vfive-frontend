@@ -107,31 +107,29 @@ export default function DestinationsPage() {
       <Navbar activePage="Destinations" />
 
       <main>
-        {/* Hero Section */}
-        <section className="py-20 md:py-28 bg-white overflow-hidden">
-          <div className="mx-auto max-w-7xl px-6 md:px-8 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <div className="flex flex-col items-start">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-primary-light text-primary font-title text-xs font-bold rounded-full mb-6">
+        {/* Hero — full-bleed background; center the artwork so it isn't cropped mid-frame */}
+        <section className="relative bg-primary text-white overflow-hidden flex items-center justify-center text-center min-h-[650px] md:min-h-[660px] lg:min-h-[660px]">
+          <div className="absolute inset-0 z-0">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/study_abroad_hero.png"
+              alt=""
+              className="h-full w-full object-cover object-center"
+            />
+          </div>
+          <div className="absolute inset-0 z-10 bg-gradient-to-b from-primary/70 via-primary/65 to-primary/80" />
+          <div className="max-w-3xl mx-auto px-6 py-8 md:py-10 relative z-20">
+            <div className="bg-hero-glass backdrop-blur-md border border-white/20 rounded-3xl px-6 py-8 sm:px-10 md:px-12 md:py-10 shadow-2xl">
+              {/* <span className="inline-flex items-center gap-2 bg-white/10 px-4 py-1.5 rounded-full text-white/80 font-title text-xs font-bold uppercase tracking-wider mb-4">
                 <Globe size={12} />
                 <span>{destinationsCMS.heroBadge}</span>
-              </div>
-              <h1 className="font-title text-4xl md:text-5xl lg:text-6xl font-black text-slate-900 leading-[1.1] mb-6">
+              </span> */}
+              <h1 className="font-title text-4xl md:text-6xl font-black mb-6 leading-tight text-white">
                 {destinationsCMS.title}
               </h1>
-              <p className="text-slate-600 text-base md:text-lg mb-8 leading-relaxed max-w-xl">
+              <p className="text-white/90 text-base md:text-xl max-w-2xl mx-auto leading-relaxed font-sans">
                 {destinationsCMS.subtitle}
               </p>
-            </div>
-
-            <div className="relative flex items-center justify-center">
-              <div className="relative w-64 h-64 md:w-80 md:h-80 rounded-full border border-slate-200 flex items-center justify-center animate-pulse">
-                <span className="absolute w-2 h-2 rounded-full bg-accent top-6 left-12" />
-                <span className="absolute w-2 h-2 rounded-full bg-accent bottom-10 right-14" />
-                <span className="absolute w-3 h-3 rounded-full bg-accent top-1/2 right-6" />
-                <div className="w-48 h-48 md:w-56 md:h-56 rounded-full bg-slate-50 border border-slate-200 flex items-center justify-center shadow-inner text-primary/80">
-                  <Globe size={80} strokeWidth={1} />
-                </div>
-              </div>
             </div>
           </div>
         </section>

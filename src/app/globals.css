@@ -23,6 +23,10 @@
   --font-title: var(--font-outfit), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
+@utility bg-hero-glass {
+  background-color: color-mix(in oklab, rgba(202, 211, 227, 0.16) 95%, transparent);
+}
+
 @layer base {
   body {
     @apply font-sans text-slate-800 bg-white antialiased;

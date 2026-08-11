@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 import {
   ArrowRight,
   Calendar,
@@ -45,48 +44,33 @@ export default function StudyAbroadPage() {
       <Navbar activePage="Study Abroad" />
 
       <main>
-        {/* Hero Section */}
-        <section className="py-20 md:py-28 bg-white overflow-hidden">
-          <div className="mx-auto max-w-7xl px-6 md:px-8 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            {/* Hero Left Content */}
-            <div className="lg:col-span-7 flex flex-col items-start text-left">
-              <div className="inline-flex items-center px-4 py-2 bg-primary-light text-primary font-title text-xs font-bold rounded-full mb-6">
-                <span>Your Journey to Excellence</span>
-              </div>
-              <h1 className="font-title text-4xl md:text-5xl lg:text-6xl font-black text-slate-900 leading-[1.1] mb-6">
+        {/* Hero — full-bleed background; center the artwork so it isn't cropped mid-frame */}
+        <section className="relative bg-primary text-white overflow-hidden flex items-center justify-center text-center min-h-[650px] md:min-h-[660px] lg:min-h-[660px]">
+          <div className="absolute inset-0 z-0">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={studyAbroadCMS?.heroImageUrl || "/study_abroad_hero.png"}
+              alt=""
+              className="h-full w-full object-cover object-center"
+            />
+          </div>
+          <div className="absolute inset-0 z-10 bg-gradient-to-b from-primary/70 via-primary/65 to-primary/80" />
+          <div className="max-w-3xl mx-auto px-6 py-8 md:py-10 relative z-20">
+            <div className="bg-hero-glass backdrop-blur-md border border-white/20 rounded-3xl px-6 py-8 sm:px-10 md:px-12 md:py-10 shadow-2xl">
+              {/* <span className="inline-block bg-white/10 px-4 py-1.5 rounded-full text-white/80 font-title text-xs font-bold uppercase tracking-wider mb-4">
+                Your Journey to Excellence
+              </span> */}
+              <h1 className="font-title text-4xl md:text-6xl font-black mb-6 leading-tight text-white">
                 {studyAbroadCMS?.heroTitle || "Your Gateway to Global Education"}
               </h1>
-              <p className="text-slate-600 text-base md:text-lg mb-8 leading-relaxed max-w-xl">
+              <p className="text-white/90 text-base md:text-xl max-w-2xl mx-auto leading-relaxed font-sans mb-8">
                 {studyAbroadCMS?.heroSubtitle || "Unlock a world of possibilities with V Five Education Consultancy. We provide expert guidance to help you navigate the journey of studying in the world's most prestigious academic destinations."}
               </p>
-              
-              <a href="/destinations" className="inline-flex items-center gap-2 font-title font-bold text-white bg-primary hover:bg-primary-hover px-6 py-3.5 rounded-xl shadow-sm hover:shadow-md transition-all duration-200">
+
+              <a href="/destinations" className="inline-flex items-center gap-2 font-title font-bold text-white bg-red-700 hover:bg-red-800 px-6 py-3.5 rounded-xl shadow-sm hover:shadow-md transition-all duration-200">
                 <span>Explore Destinations</span>
                 <ArrowRight size={18} />
               </a>
-            </div>
-
-            {/* Hero Right Card */}
-            <div className="lg:col-span-5 w-full max-w-lg mx-auto">
-              <div className="relative aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl shadow-primary/10 border-4 border-white">
-                <Image
-                  src={studyAbroadCMS?.heroImageUrl || "/study_abroad_hero.png"}
-                  alt="Students walking on university campus"
-                  fill
-                  priority
-                  sizes="(max-width: 991px) 100vw, 480px"
-                  className="object-cover"
-                />
-                <div className="absolute bottom-6 left-6 right-6 bg-white/95 backdrop-blur-md p-4 rounded-2xl shadow-lg border border-slate-100 flex items-center justify-between">
-                  <div className="flex flex-col">
-                    <h4 className="font-title text-sm font-bold text-slate-900">Fall 2024 Intakes</h4>
-                    <p className="text-xs text-slate-500">Applications now open for UK & Japan</p>
-                  </div>
-                  <div className="w-8 h-8 rounded-lg bg-primary-light text-primary flex items-center justify-center">
-                    <Calendar size={18} />
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </section>
@@ -96,14 +80,14 @@ export default function StudyAbroadPage() {
           <div className="mx-auto max-w-7xl px-6 md:px-8">
             <div className="bg-gradient-to-r from-primary to-primary-hover text-white rounded-3xl p-8 md:p-12 flex flex-col md:flex-row justify-between items-start md:items-center gap-8 shadow-md">
               <div>
-                <span className="inline-block bg-white/10 px-3.5 py-1.5 rounded-full text-accent font-title text-xs font-bold uppercase tracking-wider mb-4">{studyAbroadCMS?.scholarshipBadge || "Merit-Based Scholarships"}</span>
+                <span className="inline-block bg-white/10 px-3.5 py-1.5 rounded-full text-red-200 font-title text-xs font-bold uppercase tracking-wider mb-4">{studyAbroadCMS?.scholarshipBadge || "Merit-Based Scholarships"}</span>
                 <h2 className="font-title text-2xl md:text-3xl font-extrabold mb-3">{studyAbroadCMS?.scholarshipTitle || "Up to 100% Tuition Waiver"}</h2>
                 <p className="text-white/80 text-sm max-w-xl leading-relaxed">
                   {studyAbroadCMS?.scholarshipDesc || "Comprehensive Admissions and Financial Aid support for meritorious students looking to study in top global universities."}
                 </p>
               </div>
               <div className="flex flex-col gap-2 items-start md:items-end w-full md:w-auto flex-shrink-0">
-                <button type="button" className="bg-accent hover:bg-accent-hover text-slate-900 font-title font-bold text-sm px-6 py-3 rounded-xl shadow-sm hover:shadow-md transition-all">{studyAbroadCMS?.scholarshipButtonText || "Check Your Eligibility"}</button>
+                <button type="button" className="bg-red-700 hover:bg-red-800 text-white font-title font-bold text-sm px-6 py-3 rounded-xl shadow-sm hover:shadow-md transition-all">{studyAbroadCMS?.scholarshipButtonText || "Check Your Eligibility"}</button>
                 <span className="text-[10px] text-white/60 tracking-wide font-medium">Limited seats for 2024-25 session</span>
               </div>
             </div>
@@ -216,15 +200,25 @@ export default function StudyAbroadPage() {
         {/* Ready to take the first step CTA */}
         <section className="py-20 bg-white">
           <div className="mx-auto max-w-7xl px-6 md:px-8">
-            <div className="bg-primary text-white rounded-3xl p-8 md:p-12 lg:p-16 flex flex-col items-center text-center gap-6 shadow-xl">
-              <h2 className="font-title text-3xl md:text-4xl font-extrabold">Ready to take the first step?</h2>
-              <p className="text-white/80 text-sm md:text-base leading-relaxed max-w-2xl">
+            <div className="relative text-white rounded-3xl p-8 md:p-12 lg:p-16 flex flex-col items-center text-center gap-6 overflow-hidden shadow-xl">
+              <div className="absolute inset-0 z-0">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/student_hero.png"
+                  alt=""
+                  className="h-full w-full object-cover object-center"
+                />
+              </div>
+              <div className="absolute inset-0 z-10 bg-gradient-to-b from-primary/80 via-primary/75 to-primary/85" />
+              <div className="absolute inset-0 z-10 bg-hero-glass backdrop-blur-md" />
+              <h2 className="font-title text-3xl md:text-4xl font-extrabold text-white relative z-20">Ready to take the first step?</h2>
+              <p className="text-white/80 text-sm md:text-base leading-relaxed max-w-2xl relative z-20">
                 Join thousands of successful students worldwide. We offer transparent processing with no hidden service charges until you get your visa!
               </p>
-              <div className="flex flex-wrap justify-center gap-4 mt-2">
+              <div className="flex flex-wrap justify-center gap-4 mt-2 relative z-20">
                 <a
                   href="/contact"
-                  className="inline-flex items-center gap-2 font-title font-bold text-slate-900 bg-accent hover:bg-accent-hover px-6 py-3.5 rounded-xl shadow-sm hover:shadow-md transition-all duration-200"
+                  className="inline-flex items-center gap-2 font-title font-bold text-white bg-red-700 hover:bg-red-800 px-6 py-3.5 rounded-xl shadow-sm hover:shadow-md transition-all duration-200"
                 >
                   <Calendar size={18} />
                   <span>Book Free Counselling</span>

@@ -88,46 +88,40 @@ export default function Home() {
       <Navbar activePage="Home" />
 
       <main>
-        {/* Hero Section */}
-        <section className="relative pt-12 pb-20 md:pt-20 md:pb-28 overflow-hidden bg-white">
-          <div className="mx-auto max-w-7xl px-6 md:px-8 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            {/* Hero Left Content */}
-            <div className="lg:col-span-7 flex flex-col items-start text-left">
-              <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary-light text-primary font-title text-xs font-extrabold rounded-full uppercase tracking-wider mb-6">
+        {/* Hero — full-bleed background; center the artwork so it isn't cropped mid-frame */}
+        <section className="relative bg-primary text-white overflow-hidden flex items-center justify-center text-center min-h-[650px] md:min-h-[660px] lg:min-h-[660px]">
+          <div className="absolute inset-0 z-0">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={homeCMS.heroImageUrl}
+              alt=""
+              className="h-full w-full object-cover object-center"
+            />
+          </div>
+          <div className="absolute inset-0 z-10 bg-gradient-to-b from-primary/70 via-primary/65 to-primary/80" />
+          <div className="max-w-3xl mx-auto px-6 py-8 md:py-10 relative z-20">
+            <div className="bg-hero-glass backdrop-blur-md border border-white/20 rounded-3xl px-6 py-8 sm:px-10 md:px-12 md:py-10 shadow-2xl">
+              <span className="inline-flex items-center gap-2 bg-white/10 px-4 py-1.5 rounded-full text-white/80 font-title text-xs font-bold uppercase tracking-wider mb-4">
                 <Check size={14} strokeWidth={3} />
                 <span>{homeCMS.heroBadge}</span>
-              </div>
-              <h1 className="font-title text-4xl md:text-5xl lg:text-6xl font-black text-slate-900 leading-[1.1] mb-6">
+              </span>
+              <h1 className="font-title text-4xl md:text-6xl font-black mb-6 leading-tight text-white">
                 {homeCMS.heroTitle}
               </h1>
-              <p className="text-slate-600 text-base md:text-lg mb-8 max-w-xl leading-relaxed">
+              <p className="text-white/90 text-base md:text-xl max-w-2xl mx-auto leading-relaxed font-sans mb-8">
                 {homeCMS.heroSubtitle}
               </p>
-              <div className="flex flex-wrap items-center gap-4">
-                <a href="/courses" className="inline-flex items-center gap-2 font-title font-bold text-white bg-primary hover:bg-primary-hover px-6 py-3.5 rounded-xl shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200">
+              <div className="flex flex-wrap items-center justify-center gap-4">
+                <a href="/courses" className="inline-flex items-center gap-2 font-title font-bold text-white bg-red-700 hover:bg-red-800 px-6 py-3.5 rounded-xl shadow-sm hover:shadow-md transition-all duration-200">
                   <span>Explore Courses</span>
                   <ArrowRight size={18} />
                 </a>
                 <a
                   href="/contact"
-                  className="font-title font-bold text-primary border-2 border-primary hover:bg-primary-light px-6 py-3.5 rounded-xl transition-all duration-200 inline-block"
+                  className="font-title font-bold text-white border-2 border-white hover:bg-white/10 px-6 py-3.5 rounded-xl transition-all duration-200 inline-block"
                 >
                   Book Free Consultation
                 </a>
-              </div>
-            </div>
-
-            {/* Hero Right Graphic */}
-            <div className="lg:col-span-5 w-full max-w-lg mx-auto relative">
-              <div className="relative aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl shadow-primary/10 border-4 border-white">
-                <Image
-                  src={homeCMS.heroImageUrl}
-                  alt="V Five Education Student"
-                  fill
-                  priority
-                  sizes="(max-width: 991px) 100vw, 480px"
-                  className="object-cover"
-                />
               </div>
             </div>
           </div>

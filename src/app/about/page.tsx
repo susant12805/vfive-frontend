@@ -211,7 +211,7 @@ export default function AboutPage() {
             <div className="lg:col-span-4 flex justify-start lg:justify-end w-full relative z-20">
               <a 
                 href="/contact" 
-                className="inline-flex items-center gap-3 bg-accent hover:bg-accent-hover text-slate-900 font-title font-bold text-sm px-8 py-4 rounded-xl shadow-md transition-all uppercase tracking-wider"
+                className="inline-flex items-center gap-3 bg-red-700 hover:bg-red-800 text-white font-title font-bold text-sm px-8 py-4 rounded-xl shadow-md transition-all uppercase tracking-wider"
               >
                 <PhoneCall size={18} />
                 <span>{aboutCMS?.ctaButtonText}</span>
